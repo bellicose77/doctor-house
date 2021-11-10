@@ -1,20 +1,26 @@
-import { Button, Container, Grid, TextField, Typography } from '@mui/material';
+import { Alert, AlertTitle, Button, CircularProgress, Container, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 import doct from '../../../images/login.png'
 
 const Login = () => {
-    const { lodingData, setLogingData } = useState({});
+    const [logingData, setLogingData] = useState({});
+    const { loginUser, user, isLoading, autherror } = useAuth();
+    const history = useHistory();
+    const location = useLocation();
+
     const handleOnchange = e => {
         const field = e.target.name;
-        const valu = e.target.value;
-        const newlogingdata = { ...lodingData }
-        newlogingdata[field] = newlogingdata;
+        const value = e.target.value;
+        const newlogingdata = { ...logingData }
+        newlogingdata[field] = value;
         setLogingData(newlogingdata);
-        console.log(field, valu);
+
 
     }
     const handleLoginSubmit = e => {
+        loginUser(logingData.email, logingData.password, location, history)
         alert("Successful form");
         e.preventDefault();
 
@@ -50,8 +56,15 @@ const Login = () => {
                         <Link to="/register">
                             <Button variant="text">News user?Register here</Button>
                         </Link>
+                        {isLoading && <CircularProgress color="secondary" />}
+                        {user?.email && <Alert severity="success">user create successfully</Alert>}
+                        {autherror && <Alert severity="error">
+                            <AlertTitle>Error</AlertTitle>
+                            {autherror} <strong>check it out!</strong>
+                        </Alert>}
 
                     </form>
+
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <img style={{ width: '100%' }} src={doct}></img>
