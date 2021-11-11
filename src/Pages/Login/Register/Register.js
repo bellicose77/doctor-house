@@ -1,19 +1,21 @@
 import { Alert, AlertTitle, Button, CircularProgress, Container, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import doct from '../../../images/login.png'
 
 const Register = () => {
     const [lodingData, setLogingData]
         = useState({});
+    const history = useHistory()
     const { user, registerUser, isLoading, autherror } = useAuth();
-    const handleOnchange = e => {
+    const handleOnBlur = e => {
         const field = e.target.name;
         const value = e.target.value;
         const newlogingdata = { ...lodingData }
         newlogingdata[field] = value;
         setLogingData(newlogingdata);
+        console.log(field, value);
 
     }
     const handleLoginSubmit = e => {
@@ -21,7 +23,7 @@ const Register = () => {
             alert("Successful form");
             return
         }
-        registerUser(lodingData.email, lodingData.password)
+        registerUser(lodingData.email, lodingData.password, lodingData.name, history)
 
         e.preventDefault();
 
@@ -40,8 +42,16 @@ const Register = () => {
                             <TextField
                                 sx={{ width: '75%', m: 1 }}
                                 id="standard-basic"
+                                label="Your Name"
+                                onBlur={handleOnBlur}
+                                name="name"
+                                variant="standard"
+                            />
+                            <TextField
+                                sx={{ width: '75%', m: 1 }}
+                                id="standard-basic"
                                 label="Your email"
-                                onChange={handleOnchange}
+                                onBlur={handleOnBlur}
                                 name="email"
                                 variant="standard"
                             />
@@ -53,7 +63,7 @@ const Register = () => {
                                 label="Password"
                                 type="password"
                                 name="password"
-                                onChange={handleOnchange}
+                                onBlur={handleOnBlur}
                                 variant="standard"
                             />
                             <TextField
@@ -62,7 +72,7 @@ const Register = () => {
                                 label="Confirm your password"
                                 type="password"
                                 name="password2"
-                                onChange={handleOnchange}
+                                onBlur={handleOnBlur}
                                 variant="standard"
                             />
                             <Button type="submit" sx={{ width: '75%', m: 1 }} variant="contained">Register</Button>

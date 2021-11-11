@@ -6,7 +6,7 @@ import doct from '../../../images/login.png'
 
 const Login = () => {
     const [logingData, setLogingData] = useState({});
-    const { loginUser, user, isLoading, autherror } = useAuth();
+    const { loginUser, user, isLoading, autherror, signInWithGoogle } = useAuth();
     const history = useHistory();
     const location = useLocation();
 
@@ -23,6 +23,10 @@ const Login = () => {
         loginUser(logingData.email, logingData.password, location, history)
         alert("Successful form");
         e.preventDefault();
+
+    };
+    const handleGoogleSignIn = () => {
+        signInWithGoogle(location, history);
 
     }
     return (
@@ -64,6 +68,10 @@ const Login = () => {
                         </Alert>}
 
                     </form>
+                    <h4>Or</h4>
+                    <p>------------------------</p>
+                    <Button onClick={handleGoogleSignIn} sx={{ width: '75%', m: 1 }} variant="contained">Google Sign In</Button>
+
 
                 </Grid>
                 <Grid item xs={12} md={6}>
