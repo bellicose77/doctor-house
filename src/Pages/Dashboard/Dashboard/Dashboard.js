@@ -34,10 +34,11 @@ function Dashboard(props) {
     const drawer = (
         <div>
             <Toolbar />
+
+            <Divider />
             <Link to="/appoinment">
                 <Button sx={{ textDecoration: 'none' }} color="inherit">Appoinment</Button>
             </Link>
-            <Divider />
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem button key={text}>
