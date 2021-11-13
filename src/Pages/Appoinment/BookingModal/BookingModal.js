@@ -46,7 +46,7 @@ const BookingModal = ({ openBooking, handleBookinClose, booking, date, setBookin
             ...bookingInfo,
             time,
             SeviceName: name,
-            Date: date.toLocaleDateString()
+            date: date.toLocaleDateString()
         };
 
         // send to backend
